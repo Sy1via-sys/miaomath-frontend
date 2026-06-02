@@ -10,22 +10,7 @@ export default function ErrorToast({ message, onClose }) {
   if (!message) return null;
 
   return (
-    <div style={{
-      position: "fixed",
-      bottom: "20px",
-      right: "20px",
-      background: "#f85149",
-      color: "#fff",
-      padding: "12px 20px",
-      borderRadius: "8px",
-      fontSize: "13px",
-      fontWeight: 500,
-      zIndex: 1000,
-      boxShadow: "0 4px 12px rgba(248,81,73,0.3)",
-      maxWidth: "360px",
-      cursor: "pointer",
-    }} onClick={onClose}>
-      {message}
-    </div>
+    <div style={{ position: "fixed", bottom: "20px", right: "20px", background: "#ef4444", color: "#fff", padding: "10px 18px", borderRadius: "8px", fontSize: "12px", fontWeight: 500, zIndex: 1000, boxShadow: "0 4px 12px rgba(239,68,68,0.3)", maxWidth: "360px", cursor: "pointer" }}
+      onClick={onClose}>{message}</div>
   );
 }

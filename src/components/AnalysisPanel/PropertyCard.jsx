@@ -1,20 +1,12 @@
-export default function PropertyCard({ label, value, color = "#30363d" }) {
+export default function PropertyCard({ label, value, color = "#e2e8f0" }) {
   if (!value || (Array.isArray(value) && value.length === 0)) return null;
-
   const displayValue = Array.isArray(value)
     ? value.map((v) => (typeof v === "object" ? `${v.point} (${v.type})` : String(v))).join("、")
     : String(value);
-
   return (
-    <div style={{
-      background: "#0d1117",
-      borderRadius: "6px",
-      padding: "8px 10px",
-      borderLeft: `3px solid ${color}`,
-      marginBottom: "6px",
-    }}>
-      <div style={{ color: "#8b949e", fontSize: "10px", marginBottom: "2px" }}>{label}</div>
-      <div style={{ color: "#e6edf3", fontSize: "12px", wordBreak: "break-all" }}>{displayValue}</div>
+    <div style={{ display: "flex", justifyContent: "space-between", padding: "5px 8px", background: "#f8fafc", borderRadius: "6px", borderLeft: `2px solid ${color}`, marginBottom: "3px" }}>
+      <span style={{ color: "#64748b", fontSize: "10px" }}>{label}</span>
+      <span style={{ color: "#1e293b", fontSize: "10px" }}>{displayValue}</span>
     </div>
   );
 }
