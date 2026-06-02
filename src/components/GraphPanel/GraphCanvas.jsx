@@ -1,40 +1,23 @@
 import { useEffect, useRef } from "react";
 
 const LABELS = ["原函数", "一阶导数", "二阶导数", "三阶导数"];
-const COLORS = ["#e94560", "#f0883e", "#d2a8ff", "#79c0ff"];
+const COLORS = ["#ef4444", "#f97316", "#7c3aed", "#3b82f6"];
+const BG_COLORS = ["#fef2f2", "#fff7ed", "#f3e8ff", "#eff6ff"];
 
-export default function GraphCanvas({ index, command, onMount }) {
+export default function GraphCanvas({ index, command }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
     if (!containerRef.current || !command) return;
-
     const container = containerRef.current;
     container.innerHTML = "";
 
-    const params = {
-      appName: "graphing",
-      width: container.clientWidth,
-      height: container.clientHeight,
-      showToolBar: false,
-      showAlgebraInput: false,
-      showMenuBar: false,
-      enableShiftDragZoom: true,
-      showResetIcon: true,
-      language: "zh",
-    };
-
-    const urlParams = Object.entries(params)
-      .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
-      .join("&");
-
     const iframe = document.createElement("iframe");
-    iframe.src = `https://www.geogebra.org/graphing?${urlParams}`;
+    iframe.src = `https://www.geogebra.org/graphing?appName=graphing&showToolBar=false&showAlgebraInput=false&showMenuBar=false&enableShiftDragZoom=true&showResetIcon=true&language=zh`;
     iframe.style.width = "100%";
     iframe.style.height = "100%";
     iframe.style.border = "none";
     iframe.style.borderRadius = "6px";
-    iframe.title = LABELS[index] || `${index}阶导数`;
     container.appendChild(iframe);
 
     iframe.onload = () => {
@@ -43,33 +26,25 @@ export default function GraphCanvas({ index, command, onMount }) {
           { command: "eval", value: command },
           "https://www.geogebra.org"
         );
-      }, 1500);
+      }, 1200);
     };
 
-    return () => {
-      container.innerHTML = "";
-    };
-  }, [command, index]);
+    return () => { container.innerHTML = ""; };
+  }, [command]);
+
+  const idx = index % COLORS.length;
 
   return (
     <div style={{
-      flex: 1,
-      background: "#161b22",
-      borderRadius: "8px",
-      border: `1px solid ${COLORS[index % COLORS.length] || "#30363d"}`,
-      padding: "10px",
-      display: "flex",
-      flexDirection: "column",
-      minHeight: "180px",
+      flex: 1, background: "#fff", borderRadius: "10px",
+      border: "1px solid #e2e8f0", padding: "10px",
+      display: "flex", flexDirection: "column", minHeight: "150px",
+      boxShadow: "0 1px 2px rgba(0,0,0,0.03)",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
         <span style={{
-          background: COLORS[index % COLORS.length] || "#30363d",
-          color: index === 2 ? "#0d1117" : "#fff",
-          padding: "2px 10px",
-          borderRadius: "4px",
-          fontSize: "11px",
-          fontWeight: 700,
+          background: BG_COLORS[idx], color: COLORS[idx],
+          padding: "2px 10px", borderRadius: "20px", fontSize: "10px", fontWeight: 700,
         }}>
           {LABELS[index] || `${index}阶导数`}
         </span>
