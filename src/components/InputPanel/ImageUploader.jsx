@@ -44,14 +44,14 @@ export default function ImageUploader({ onUpload, disabled }) {
         onDrop={handleDrop}
         onPaste={handlePaste}
         tabIndex={0}
+        className="glass-card"
         style={{
-          background: dragOver ? "#eff6ff" : "#fff",
-          border: `2px dashed ${dragOver ? "#3b82f6" : "#cbd5e1"}`,
-          borderRadius: "12px", padding: "18px 14px", textAlign: "center",
+          padding: "20px 14px", textAlign: "center",
           cursor: disabled ? "not-allowed" : "pointer",
           opacity: disabled ? 0.5 : 1,
-          transition: "all 0.2s ease",
-          boxShadow: dragOver ? "0 0 0 6px rgba(59,130,246,0.08)" : "none",
+          transition: "all 0.3s ease",
+          border: `2px dashed ${dragOver ? "#3b82f6" : "rgba(203,213,225,0.5)"}`,
+          boxShadow: dragOver ? "0 0 0 6px rgba(59,130,246,0.08), 0 4px 24px rgba(0,0,0,0.04)" : "",
         }}
       >
         {preview ? (

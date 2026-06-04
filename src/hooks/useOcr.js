@@ -6,12 +6,12 @@ export function useOcr() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const recognize = useCallback(async (imageBase64) => {
+  const recognize = useCallback(async (imageBase64, mime = "image/jpeg") => {
     setLoading(true);
     setError(null);
     setResult(null);
     try {
-      const data = await ocrImage(imageBase64);
+      const data = await ocrImage(imageBase64, mime);
       setResult(data);
       return data;
     } catch (err) {

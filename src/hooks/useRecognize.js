@@ -6,12 +6,12 @@ export function useRecognize() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const recognize = useCallback(async (imageBase64, endpoint, apiKey, model) => {
+  const recognize = useCallback(async (imageBase64, model, mime = "image/jpeg") => {
     setLoading(true);
     setError(null);
     setResult(null);
     try {
-      const data = await recognizeImage(imageBase64, endpoint, apiKey, model);
+      const data = await recognizeImage(imageBase64, model, mime);
       setResult(data);
       return data;
     } catch (err) {

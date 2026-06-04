@@ -1,13 +1,28 @@
 import { useState, useCallback } from "react";
 
-const STORAGE_KEY = "math_solver_api_settings";
+const STORAGE_KEY = "math_solver_api_settings_v2";
+
+function defaultSettings() {
+  return {
+    endpoint: "",
+    apiKey: "",
+    model: "qwen-vl-max",
+    solutionEndpoint: "",
+    solutionApiKey: "",
+    solutionModel: "deepseek-chat",
+  };
+}
 
 function loadSettings() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      // Merge with defaults to add any missing fields
+      return { ...defaultSettings(), ...saved };
+    }
   } catch {}
-  return { endpoint: "", apiKey: "", model: "qwen-vl-max" };
+  return defaultSettings();
 }
 
 export function useSettings() {
@@ -19,6 +34,7 @@ export function useSettings() {
   }, []);
 
   const hasSettings = !!(settings.endpoint && settings.apiKey);
+  const hasSolutionSettings = !!(settings.solutionEndpoint && settings.solutionApiKey);
 
-  return { settings, saveSettings, hasSettings };
+  return { settings, saveSettings, hasSettings, hasSolutionSettings };
 }

@@ -6,18 +6,19 @@ export function useGeoGebra() {
   const [commands, setCommands] = useState([]);
   const [error, setError] = useState(null);
 
-  const generate = useCallback(async (latex, order) => {
+  const generate = useCallback(async (latex, order, type = "function", geometryElements = [], graphSpec = null) => {
     setLoading(true);
     setError(null);
     setCommands([]);
     try {
-      const data = await getGeogebraCommands(latex, order);
+      const data = await getGeogebraCommands(latex, order, type, geometryElements, graphSpec);
       setCommands(data.commands || []);
-      return data.commands || [];
+      return data;
     } catch (err) {
       const msg = err.message || "生成图像失败";
       setError(msg);
-      return [];
+      setCommands([]);
+      return { success: false, commands: [], error: msg };
     } finally {
       setLoading(false);
     }
