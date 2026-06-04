@@ -1,20 +1,12 @@
 import { useState } from "react";
 
 export default function SettingsModal({ settings, onSave, onClose }) {
-  const [endpoint, setEndpoint] = useState(settings.endpoint);
-  const [apiKey, setApiKey] = useState(settings.apiKey);
-  const [model, setModel] = useState(settings.model);
-  const [solutionEndpoint, setSolutionEndpoint] = useState(settings.solutionEndpoint || "");
-  const [solutionApiKey, setSolutionApiKey] = useState(settings.solutionApiKey || "");
+  const [model, setModel] = useState(settings.model || "qwen-vl-max");
   const [solutionModel, setSolutionModel] = useState(settings.solutionModel || "deepseek-chat");
 
   const handleSave = () => {
     onSave({
-      endpoint: endpoint.trim(),
-      apiKey: apiKey.trim(),
       model: model.trim() || "qwen-vl-max",
-      solutionEndpoint: solutionEndpoint.trim(),
-      solutionApiKey: solutionApiKey.trim(),
       solutionModel: solutionModel.trim() || "deepseek-chat",
     });
     onClose();
@@ -38,22 +30,12 @@ export default function SettingsModal({ settings, onSave, onClose }) {
           }}>✕</button>
         </div>
 
+        <p style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "16px" }}>
+          API 密钥已内置，无需手动配置。以下选项供高级用户调整模型。
+        </p>
+
         <div style={{ marginBottom: "16px" }}>
-          <h4 style={{ margin: "0 0 8px 0", fontSize: "13px", color: "#3b82f6" }}>图片识别 API</h4>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label style={labelStyle}>API 端点 URL</label>
-            <input value={endpoint} onChange={(e) => setEndpoint(e.target.value)}
-              placeholder="https://dashscope.aliyuncs.com/compatible-mode"
-              style={inputStyle} />
-          </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label style={labelStyle}>API Key</label>
-            <input value={apiKey} onChange={(e) => setApiKey(e.target.value)}
-              type="password" placeholder="sk-..."
-              style={inputStyle} />
-          </div>
+          <h4 style={{ margin: "0 0 8px 0", fontSize: "13px", color: "#3b82f6" }}>图片识别模型</h4>
 
           <div style={{ marginBottom: "10px" }}>
             <label style={labelStyle}>模型名称</label>
@@ -65,21 +47,7 @@ export default function SettingsModal({ settings, onSave, onClose }) {
         </div>
 
         <div style={{ marginBottom: "16px", borderTop: "1px solid #e2e8f0", paddingTop: "12px" }}>
-          <h4 style={{ margin: "0 0 8px 0", fontSize: "13px", color: "#f59e0b" }}>解题思路 API（可选）</h4>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label style={labelStyle}>API 端点 URL</label>
-            <input value={solutionEndpoint} onChange={(e) => setSolutionEndpoint(e.target.value)}
-              placeholder="https://api.deepseek.com"
-              style={inputStyle} />
-          </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label style={labelStyle}>API Key</label>
-            <input value={solutionApiKey} onChange={(e) => setSolutionApiKey(e.target.value)}
-              type="password" placeholder="sk-..."
-              style={inputStyle} />
-          </div>
+          <h4 style={{ margin: "0 0 8px 0", fontSize: "13px", color: "#f59e0b" }}>解题思路模型</h4>
 
           <div style={{ marginBottom: "10px" }}>
             <label style={labelStyle}>模型名称</label>
